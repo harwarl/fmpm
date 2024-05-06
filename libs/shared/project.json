@@ -1,7 +1,7 @@
 {
-  "name": "config",
+  "name": "shared",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/config/src",
+  "sourceRoot": "libs/shared/src",
   "projectType": "library",
   "release": {
     "version": {
@@ -17,11 +17,11 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/config",
-        "tsConfig": "libs/config/tsconfig.lib.json",
-        "packageJson": "libs/config/package.json",
-        "main": "libs/config/src/index.ts",
-        "assets": ["libs/config/*.md"]
+        "outputPath": "dist/libs/shared",
+        "tsConfig": "libs/shared/tsconfig.lib.json",
+        "packageJson": "libs/shared/package.json",
+        "main": "libs/shared/src/index.ts",
+        "assets": ["libs/shared/*.md"]
       }
     },
     "nx-release-publish": {

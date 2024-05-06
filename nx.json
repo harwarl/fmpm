@@ -42,7 +42,10 @@
         "apps/rate-e2e/**/*",
         "fmpm-gateway-e2e/**/*",
         "fmpm-auth-e2e/**/*",
-        "fmpm-user-e2e/**/*"
+        "fmpm-user-e2e/**/*",
+        "apps/fmpm-gateway-e2e/**/*",
+        "apps/fmpm-auth-e2e/**/*",
+        "apps/fmpm-user-e2e/**/*"
       ]
     }
   ],

@@ -1,0 +1,24 @@
+{
+  "name": "fmpm-gateway",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/fmpm-gateway/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "fmpm-gateway:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "fmpm-gateway:build:development"
+        },
+        "production": {
+          "buildTarget": "fmpm-gateway:build:production"
+        }
+      }
+    }
+  }
+}

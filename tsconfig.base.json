@@ -15,8 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fmpm/config": ["libs/config/src/index.ts"],
-      "@fmpm/database": ["libs/database/src/index.ts"]
+      "@fmpm/config": ["libs/config/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

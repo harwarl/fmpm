@@ -1,0 +1,24 @@
+{
+  "name": "fmpm-auth",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "fmpm-auth/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "fmpm-auth:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "fmpm-auth:build:development"
+        },
+        "production": {
+          "buildTarget": "fmpm-auth:build:production"
+        }
+      }
+    }
+  }
+}

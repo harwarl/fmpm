@@ -1,7 +1,7 @@
 {
-  "name": "shared",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/src",
+  "name": "constants",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/constants/src",
   "projectType": "library",
   "release": {
     "version": {
@@ -17,11 +17,11 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/shared",
-        "tsConfig": "libs/shared/tsconfig.lib.json",
-        "packageJson": "libs/shared/package.json",
-        "main": "libs/shared/src/index.ts",
-        "assets": ["libs/shared/*.md"]
+        "outputPath": "dist/libs/shared/constants",
+        "tsConfig": "libs/shared/constants/tsconfig.lib.json",
+        "packageJson": "libs/shared/constants/package.json",
+        "main": "libs/shared/constants/src/index.ts",
+        "assets": ["libs/shared/constants/*.md"]
       }
     },
     "nx-release-publish": {

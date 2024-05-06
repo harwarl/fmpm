@@ -34,7 +34,25 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/fmpm-e2e/**/*"]
+      "exclude": [
+        "apps/fmpm-e2e/**/*",
+        "apps/wallet-e2e/**/*",
+        "apps/transaction-e2e/**/*",
+        "apps/auth-e2e/**/*",
+        "apps/rate-e2e/**/*"
+      ]
     }
-  ]
+  ],
+  "targetDefaults": {
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    }
+  },
+  "release": {
+    "version": {
+      "preVersionCommand": "npx nx run-many -t build"
+    }
+  }
 }

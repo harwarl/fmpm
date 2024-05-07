@@ -53,6 +53,7 @@ export class ConfigService {
       host: env['MONGO_HOST'] || defaultConfig.host,
       port: Number(env['MONGO_PORT']) || defaultConfig.port,
       database: env['MONGO_DATABASE'] || defaultConfig.database,
+      password: env['MONGO_PASSWORD'] || defaultConfig.password,
     };
   }
 

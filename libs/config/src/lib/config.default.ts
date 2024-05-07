@@ -9,6 +9,7 @@ export const DEFAULT_CONFIG: ConfigData = {
     host: 'localhost',
     port: Number('27017'),
     database: 'fmpm_test',
+    password: '',
   },
   swagger: {
     username: '',
@@ -16,8 +17,8 @@ export const DEFAULT_CONFIG: ConfigData = {
   },
   auth: {
     expiresIn: 30000,
-    access_token_secret: '',
-    refresh_token_secret: '',
+    access_token_secret: 'This is just a test',
+    refresh_token_secret: 'this is the refreshTest',
   },
   userService: {
     options: {

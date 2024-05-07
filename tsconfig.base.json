@@ -17,8 +17,7 @@
     "paths": {
       "@fmpm/config": ["libs/config/src/index.ts"],
       "@fmpm/constants": ["libs/shared/constants/src/index.ts"],
-      "@fmpm/decorators": ["libs/shared/decorators/src/index.ts"],
-      "@fmpm/models": ["libs/shared/models/src/index.ts"]
+      "@fmpm/decorators": ["libs/shared/decorators/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

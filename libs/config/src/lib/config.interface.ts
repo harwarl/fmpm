@@ -5,6 +5,7 @@ export interface ConfigDatabase {
   host: string;
   port: number;
   database: string;
+  password: string;
 }
 
 export interface AuthConfig {

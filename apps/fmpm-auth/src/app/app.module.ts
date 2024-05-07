@@ -1,11 +1,24 @@
 import { Module } from '@nestjs/common';
-
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { config } from '../ormConfig';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigService } from '@fmpm/config';
+import { UserController } from './user/user.controller';
+import { UserModule } from './user/user.module';
 
+const authConfig = new ConfigService().get().auth;
 @Module({
-  imports: [],
-  controllers: [AppController],
+  imports: [
+    TypeOrmModule.forRoot(config),
+    JwtModule.register({
+      signOptions: { expiresIn: authConfig.expiresIn },
+      secret: authConfig.access_token_secret,
+    }),
+    UserModule,
+  ],
+  controllers: [AppController, UserController],
   providers: [AppService],
 })
 export class AppModule {}

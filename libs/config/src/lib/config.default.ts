@@ -6,7 +6,7 @@ export const DEFAULT_CONFIG: ConfigData = {
   env: 'production',
   db: {
     type: 'mongodb',
-    host: 'localhost',
+    host: '127.0.0.1',
     port: Number('27017'),
     database: 'fmpm_test',
     password: '',

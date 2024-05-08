@@ -1,18 +1,16 @@
 import {
   BeforeInsert,
   Column,
-  CreateDateColumn,
   Entity,
   ObjectId,
   ObjectIdColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 import { HelperService } from '../helper/helper.service';
 
 @Entity({ name: 'user' })
 export class User {
   @ObjectIdColumn()
-  id: ObjectId;
+  _id: ObjectId;
 
   @Column({ type: 'string' })
   firstName: string;
@@ -29,10 +27,10 @@ export class User {
   @Column({ type: 'string' })
   email: string;
 
-  @CreateDateColumn()
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @Column({ type: 'timestamp', default: null, nullable: true })
   updatedAt: Date;
 
   @Column({ type: 'string', default: '' })

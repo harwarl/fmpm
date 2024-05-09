@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@fmpm/config';
 import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
+import { ProfileModule } from './profile/profile.module';
 
 const authConfig = new ConfigService().get().auth;
 @Module({
@@ -17,6 +18,7 @@ const authConfig = new ConfigService().get().auth;
       secret: authConfig.access_token_secret,
     }),
     UserModule,
+    ProfileModule,
   ],
   controllers: [AppController, UserController],
   providers: [AppService],

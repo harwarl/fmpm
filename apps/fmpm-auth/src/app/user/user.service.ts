@@ -1,12 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User as UserEntity } from '../entity/user.entity';
+// import { User as UserEntity } from '../entity/user.entity';
+import { User as UserEntity } from '@fmpm/models';
 import { MongoRepository } from 'typeorm';
 import { CreateUserDto, LoginUserDto, UpdateUserDto } from '../dto';
 import { JwtService } from '@nestjs/jwt';
 import { ObjectId } from 'mongodb';
 import { IUserResponse } from '../types/userResponse.interface';
-import { HelperService } from '../helper/helper.service';
+// import { HelperService } from '../helper/helper.service';
+import { BcryptService } from '@fmpm/helpers';
 
 @Injectable()
 export class UserService {
@@ -14,7 +16,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepository: MongoRepository<UserEntity>,
     private readonly JwtService: JwtService,
-    private readonly helperService: HelperService
+    private readonly helperService: BcryptService
   ) {}
   async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
     const userByEmail = await this.userRepository.findOneBy({
@@ -79,14 +81,19 @@ export class UserService {
   }
 
   generateJwt(user: UserEntity): string {
-    return this.JwtService.sign({
-      id: user._id,
-      email: user.email,
-      username: user.username,
-    });
+    return this.JwtService.sign(
+      {
+        id: user._id,
+        email: user.email,
+        username: user.username,
+      },
+      {
+        secret: 'Alade of Egba Land',
+      }
+    );
   }
 
-  buildUserResponse(user: UserEntity): IUserResponse {
+  buildUserTokenResponse(user: UserEntity): IUserResponse {
     return {
       user: {
         ...user,

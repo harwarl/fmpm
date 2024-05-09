@@ -1,13 +1,19 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, LoginUserDto } from '../dto';
 import { IUserResponse } from '../types/userResponse.interface';
+import { AuthGuard } from '@fmpm/guards';
+import { User } from '@fmpm/decorators';
+import { User as UserEntity } from '@fmpm/models';
+import { ObjectId } from 'typeorm';
 
 @Controller('user')
 export class UserController {
@@ -20,15 +26,21 @@ export class UserController {
   ): Promise<IUserResponse> {
     const user = await this.userService.createUser(createUserDto);
     delete user.password;
-    return this.userService.buildUserResponse(user);
+    return this.userService.buildUserTokenResponse(user);
   }
 
-  @Post()
+  @Post('login')
   @UsePipes(new ValidationPipe())
   async loginUser(
     @Body('user') loginUserDto: LoginUserDto
   ): Promise<IUserResponse> {
     const user = await this.userService.loginUser(loginUserDto);
-    return this.userService.buildUserResponse(user);
+    return this.userService.buildUserTokenResponse(user);
+  }
+
+  @Get('me')
+  @UseGuards(AuthGuard)
+  async getUser(@User() currentUser: UserEntity): Promise<UserEntity> {
+    return currentUser;
   }
 }

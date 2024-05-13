@@ -33,7 +33,7 @@ export class ConfigService {
         options: {
           url: env['USER_SERVICE_MQTT_URL']!,
         },
-        transport: Transport.KAFKA,
+        transport: Transport.MQTT,
       },
       authService: {
         options: {

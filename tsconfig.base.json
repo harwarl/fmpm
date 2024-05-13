@@ -17,7 +17,11 @@
     "paths": {
       "@fmpm/config": ["libs/config/src/index.ts"],
       "@fmpm/constants": ["libs/shared/constants/src/index.ts"],
-      "@fmpm/decorators": ["libs/shared/decorators/src/index.ts"]
+      "@fmpm/decorators": ["libs/shared/decorators/src/index.ts"],
+      "@fmpm/guards": ["libs/shared/guards/src/index.ts"],
+      "@fmpm/helpers": ["libs/shared/helpers/src/index.ts"],
+      "@fmpm/interfaces": ["libs/shared/interfaces/src/index.ts"],
+      "@fmpm/models": ["libs/shared/models/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

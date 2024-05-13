@@ -2,7 +2,7 @@ import { join } from 'path';
 import { DataSource } from 'typeorm';
 import { MongoConnectionOptions } from 'typeorm/driver/mongodb/MongoConnectionOptions.js';
 import { ConfigService } from '@fmpm/config';
-import { User } from './app/entity/user.entity';
+import { User } from '@fmpm/models';
 
 //---------------------------------- comment ----------------------------------
 const configData = new ConfigService().get().db;

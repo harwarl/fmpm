@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from '../ormConfig';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@fmpm/config';
-import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 import { ProfileModule } from './profile/profile.module';
 
@@ -20,7 +19,7 @@ const authConfig = new ConfigService().get().auth;
     UserModule,
     ProfileModule,
   ],
-  controllers: [AppController, UserController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

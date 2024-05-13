@@ -3,21 +3,21 @@
  * This is only a minimal backend to get started.
  */
 
-import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import { GLOBAL_API_PREFIX } from '@fmpm/constants';
-import { ConfigService } from '@fmpm/config';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
-const port = new ConfigService().get().port;
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix(GLOBAL_API_PREFIX);
-  await app.listen(port);
-  Logger.log('Inhere boss');
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${GLOBAL_API_PREFIX}`
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+    AppModule,
+    {
+      transport: Transport.MQTT,
+      options: {
+        url: 'mqtt://localhost:1883',
+      },
+    }
   );
+  await app.listen();
 }
 
 bootstrap();

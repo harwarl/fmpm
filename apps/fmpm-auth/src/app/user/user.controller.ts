@@ -14,17 +14,20 @@ import { AuthGuard } from '@fmpm/guards';
 import { User } from '@fmpm/decorators';
 import { User as UserEntity } from '@fmpm/models';
 import { ObjectId } from 'typeorm';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  @UsePipes(new ValidationPipe())
+  // @Post()
+  // @UsePipes(new ValidationPipe())
+  @MessagePattern('create-user')
   async createUser(
-    @Body('user') createUserDto: CreateUserDto
+    // @Body('user') createUserDto: CreateUserDto
+    payload: CreateUserDto
   ): Promise<IUserResponse> {
-    const user = await this.userService.createUser(createUserDto);
+    const user = await this.userService.createUser(payload);
     delete user.password;
     return this.userService.buildUserTokenResponse(user);
   }

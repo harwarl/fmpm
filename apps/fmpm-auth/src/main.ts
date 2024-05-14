@@ -8,12 +8,14 @@ import { AppModule } from './app/app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
+  // Example for connecting to RabbitMQ
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
     {
-      transport: Transport.MQTT,
+      transport: Transport.RMQ,
       options: {
-        url: 'mqtt://localhost:1883',
+        urls: ['amqp://127.0.0.1:5672'],
+        queue: 'auth_queue',
       },
     }
   );

@@ -1,14 +1,9 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Get, Inject, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ClientProxy } from '@nestjs/microservices';
-import { Services } from '@fmpm/constants';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    @Inject(Services.AUTH_SERVICE) private readonly auth_client: ClientProxy
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   getData() {

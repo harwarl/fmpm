@@ -8,36 +8,38 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto, LoginUserDto } from '../dto';
+// import { CreateUserDto, LoginUserDto } from '../dto';
+import { CreateUserDto, UpdateUserDto, LoginUserDto } from '@fmpm/dtos';
 import { IUserResponse } from '../types/userResponse.interface';
 import { AuthGuard } from '@fmpm/guards';
 import { User } from '@fmpm/decorators';
 import { User as UserEntity } from '@fmpm/models';
-import { ObjectId } from 'typeorm';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { MessagePattern } from '@nestjs/microservices';
+import { Actions } from '@fmpm/constants';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // @Post()
-  // @UsePipes(new ValidationPipe())
-  @MessagePattern('create-user')
-  async createUser(
-    // @Body('user') createUserDto: CreateUserDto
-    payload: CreateUserDto
-  ): Promise<IUserResponse> {
-    const user = await this.userService.createUser(payload);
+  @MessagePattern({ cmd: Actions.CREATE_USER })
+  async createUser(createUserDto: CreateUserDto): Promise<IUserResponse> {
+    const user = await this.userService.createUser(createUserDto);
     delete user.password;
     return this.userService.buildUserTokenResponse(user);
   }
 
-  @Post('login')
-  @UsePipes(new ValidationPipe())
-  async loginUser(
-    @Body('user') loginUserDto: LoginUserDto
-  ): Promise<IUserResponse> {
+  @MessagePattern({ cmd: Actions.LOGIN_USER })
+  async loginUser(loginUserDto: LoginUserDto): Promise<IUserResponse> {
     const user = await this.userService.loginUser(loginUserDto);
+    return this.userService.buildUserTokenResponse(user);
+  }
+
+  @MessagePattern({ cmd: Actions.LOGIN_USER })
+  async updateUser(updateUserDto: UpdateUserDto): Promise<IUserResponse> {
+    const user = await this.userService.updateUser(
+      updateUserDto.currentUserId,
+      updateUserDto
+    );
     return this.userService.buildUserTokenResponse(user);
   }
 

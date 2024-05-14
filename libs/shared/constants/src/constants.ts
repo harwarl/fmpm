@@ -5,4 +5,8 @@ export enum Services {
   INTERGRATION_SERVICE = 'INTERGRATION_SERVICE',
 }
 
-export enum Actions {}
+export enum Actions {
+  CREATE_USER = 'create-user',
+  UPDATE_USER = 'update-user',
+  LOGIN_USER = 'login-user',
+}

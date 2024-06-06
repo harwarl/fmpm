@@ -1,0 +1,24 @@
+{
+  "name": "fmpm-wallet",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/fmpm-wallet/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "fmpm-wallet:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "fmpm-wallet:build:development"
+        },
+        "production": {
+          "buildTarget": "fmpm-wallet:build:production"
+        }
+      }
+    }
+  }
+}

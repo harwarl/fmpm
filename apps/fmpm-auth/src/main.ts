@@ -1,25 +1,19 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { RabbitMQService } from '@fmpm/modules'; // Adjust the import path
+import { Queues } from '@fmpm/constants';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  // Example for connecting to RabbitMQ
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    AppModule,
-    {
-      transport: Transport.RMQ,
-      options: {
-        urls: ['amqp://127.0.0.1:5672'],
-        queue: 'auth_queue',
-      },
-    }
-  );
-  await app.listen();
+  const app = await NestFactory.create(AppModule);
+
+  const configService = app.get(ConfigService);
+  const rabbitMQService = app.get(RabbitMQService);
+
+  app.connectMicroservice(rabbitMQService.getRmqOptions(Queues.AUTH_QUEUE));
+  await app.startAllMicroservices();
+
+  await app.listen(configService.get('PORT'));
 }
 
 bootstrap();

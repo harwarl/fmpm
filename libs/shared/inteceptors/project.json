@@ -1,0 +1,33 @@
+{
+  "name": "inteceptors",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/inteceptors/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/inteceptors",
+        "tsConfig": "libs/shared/inteceptors/tsconfig.lib.json",
+        "packageJson": "libs/shared/inteceptors/package.json",
+        "main": "libs/shared/inteceptors/src/index.ts",
+        "assets": ["libs/shared/inteceptors/*.md"]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  }
+}

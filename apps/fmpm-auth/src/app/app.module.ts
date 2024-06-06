@@ -1,23 +1,21 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { config } from '../ormConfig';
+import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { ConfigService } from '@fmpm/config';
-import { UserModule } from './user/user.module';
-import { ProfileModule } from './profile/profile.module';
+import { AuthModule } from './auth/auth.module';
+import { MongoModule, RabbitMQModule } from '@fmpm/modules';
 
-const authConfig = new ConfigService().get().auth;
 @Module({
   imports: [
-    TypeOrmModule.forRoot(config),
-    JwtModule.register({
-      signOptions: { expiresIn: authConfig.expiresIn },
-      secret: authConfig.access_token_secret,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: './.env',
     }),
-    UserModule,
-    ProfileModule,
+    AuthModule,
+    MongoModule,
+    JwtModule,
+    RabbitMQModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,18 +1,16 @@
-import { join } from 'path';
 import { DataSource } from 'typeorm';
 import { MongoConnectionOptions } from 'typeorm/driver/mongodb/MongoConnectionOptions.js';
-import { ConfigService } from '@fmpm/config';
 import { User } from '@fmpm/models';
+import { ConfigService } from '@nestjs/config';
 
 //---------------------------------- comment ----------------------------------
-const configData = new ConfigService().get().db;
 
 export const config: MongoConnectionOptions = {
   type: 'mongodb',
-  host: configData.host,
-  port: configData.port,
-  database: configData.database,
-  password: configData.password || null,
+  host: '127.0.0.1',
+  port: 27017,
+  database: 'fmpm_test',
+  password: '',
   entities: [User],
   useUnifiedTopology: true,
   useNewUrlParser: true,

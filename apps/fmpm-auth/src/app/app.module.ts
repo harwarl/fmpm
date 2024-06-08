@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
 import { MongoModule, RabbitMQModule } from '@fmpm/modules';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { MongoModule, RabbitMQModule } from '@fmpm/modules';
       envFilePath: './.env',
     }),
     AuthModule,
+    ProfileModule,
     MongoModule,
     JwtModule,
     RabbitMQModule,

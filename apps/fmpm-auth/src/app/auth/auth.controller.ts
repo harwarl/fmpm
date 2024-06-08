@@ -24,11 +24,10 @@ export class AuthController {
   @MessagePattern({ cmd: Actions.CREATE_USER })
   async createUser(
     @Ctx() context: RmqContext,
-    @Payload() payload: { createUserDto: CreateUserDto }
+    @Payload() createUserDto: CreateUserDto
   ): Promise<IUserResponse> {
-    console.log('In here');
     this.rabbitMqService.acknowledgeMessage(context);
-    const user = await this.authService.createUser(payload.createUserDto);
+    const user = await this.authService.createUser(createUserDto);
     delete user.password;
     return this.authService.buildUserTokenResponse(user);
   }
@@ -39,7 +38,6 @@ export class AuthController {
     @Payload() loginUserDto: LoginUserDto
   ): Promise<IUserResponse> {
     this.rabbitMqService.acknowledgeMessage(context);
-    console.log({ loginUserDto });
     const user = await this.authService.loginUser(loginUserDto);
     return this.authService.buildUserTokenResponse(user);
   }

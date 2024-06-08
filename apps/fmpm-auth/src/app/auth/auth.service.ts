@@ -8,7 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { User as UserEntity } from '@fmpm/models';
 import { MongoRepository } from 'typeorm';
-import { CreateUserDto, LoginUserDto, UpdateUserDto } from '../dto';
+import { CreateUserDto, LoginUserDto } from '../dto';
 import { JwtService } from '@nestjs/jwt';
 import { ObjectId } from 'mongodb';
 import { IUserResponse } from '../types/userResponse.interface';
@@ -43,13 +43,11 @@ export class AuthService {
   }
 
   async loginUser(loginUserDto: LoginUserDto): Promise<UserEntity> {
-    console.log('In Here');
     const user = await this.userRepository.findOne({
       where: {
         email: loginUserDto.email,
       },
     });
-    console.log({ user });
 
     if (!user) {
       throw new HttpException(

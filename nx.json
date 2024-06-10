@@ -46,7 +46,9 @@
         "apps/fmpm-gateway-e2e/**/*",
         "apps/fmpm-auth-e2e/**/*",
         "apps/fmpm-user-e2e/**/*",
-        "apps/fmpm-wallet-e2e/**/*"
+        "apps/fmpm-wallet-e2e/**/*",
+        "apps/fmpm-transaction-e2e/**/*",
+        "apps/fmpm-integration-rate-e2e/**/*"
       ]
     }
   ],

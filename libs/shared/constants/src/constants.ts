@@ -13,6 +13,7 @@ export enum Actions {
   VALIDATE_TOKEN = 'validate_token',
   VERIFY_JWT = 'verify_jwt',
   DECODE_JWT = 'decode_jwt',
+  CHANGE_PASSWORD = 'change_password',
 }
 
 export enum Queues {

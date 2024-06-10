@@ -3,14 +3,26 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
 import { UpdateUserDto } from '../dto';
 import { ObjectId } from 'mongodb';
+import { ChangePasswordDto } from '@fmpm/dtos';
+import { BcryptService } from '@fmpm/helpers';
 
 export class ProfileService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: MongoRepository<User>
+    private readonly userRepository: MongoRepository<User>,
+    private readonly bcryptService: BcryptService
   ) {}
 
-  async getUserProfile(currentUserId: ObjectId): Promise<User> {
+  async changePassword(changePasswordDto: ChangePasswordDto) {
+    const user = await this.findUserById(changePasswordDto.currentUserId);
+    const hashedPassword = await this.bcryptService.hashPassword(
+      changePasswordDto.password
+    );
+    Object.assign(user, { password: hashedPassword });
+    return await this.userRepository.save(user);
+  }
+
+  async getUser(currentUserId: ObjectId): Promise<User> {
     return await this.findUserById(currentUserId);
   }
 

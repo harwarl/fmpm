@@ -1,0 +1,24 @@
+{
+  "name": "fmpm-integration-rate",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/fmpm-integration-rate/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "fmpm-integration-rate:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "fmpm-integration-rate:build:development"
+        },
+        "production": {
+          "buildTarget": "fmpm-integration-rate:build:production"
+        }
+      }
+    }
+  }
+}

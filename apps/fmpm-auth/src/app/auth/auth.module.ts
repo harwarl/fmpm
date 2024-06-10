@@ -18,6 +18,5 @@ import { RabbitMQModule } from '@fmpm/modules';
   ],
   controllers: [AuthController],
   providers: [AuthService, BcryptService],
-  exports: [AuthService],
 })
 export class AuthModule {}

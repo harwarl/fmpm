@@ -20,13 +20,13 @@ export class User {
   @Column({ type: 'string', default: '' })
   lastName!: string;
 
-  @Column({ type: 'string' })
+  @Column({ type: 'string', unique: true })
   username!: string;
 
   @Column({ type: 'string' })
   password!: string;
 
-  @Column({ type: 'string' })
+  @Column({ type: 'string', unique: true })
   email!: string;
 
   @CreateDateColumn({

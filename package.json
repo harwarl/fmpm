@@ -2,7 +2,9 @@
   "name": "@fmpm/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "serve-all": "nx run-many --target=serve --projects=fmpm-gateway,fmpm-auth,fmpm-integration-rate,fmpm-wallet --parallel=4"
+  },
   "private": true,
   "dependencies": {
     "@nestjs-modules/mailer": "^2.0.2",

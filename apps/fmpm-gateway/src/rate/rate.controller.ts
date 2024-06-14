@@ -1,5 +1,16 @@
 import { Actions, Services } from '@fmpm/constants';
-import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
+import { AuthGuard } from '@fmpm/guards';
+import { UserInteceptor } from '@fmpm/inteceptors';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Query,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 
@@ -37,6 +48,8 @@ export class RateController {
   }
 
   @Post('pair')
+  @UseGuards(AuthGuard)
+  @UseInterceptors(UserInteceptor)
   async getExchangeAmount(
     @Query() query: Query,
     @Body() body: { amount: number }

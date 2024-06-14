@@ -13,7 +13,7 @@ async function bootstrap() {
   app.connectMicroservice(rabbitMQService.getRmqOptions(Queues.AUTH_QUEUE));
   await app.startAllMicroservices();
 
-  await app.listen(configService.get('PORT'));
+  await app.listen(configService.get('AUTH_PORT'));
 }
 
 bootstrap();

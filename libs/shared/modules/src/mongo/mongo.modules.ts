@@ -1,4 +1,4 @@
-import { User } from '@fmpm/models';
+import { User, Wallet } from '@fmpm/models';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -13,7 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       useFactory: (configService: ConfigService) => ({
         type: 'mongodb',
         url: configService.get('MONGO_URL'),
-        entities: [User],
+        entities: [User, Wallet],
         useUnifiedTopology: true,
         useNewUrlParser: true,
         synchronize: false,

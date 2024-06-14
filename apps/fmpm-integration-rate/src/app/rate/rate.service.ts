@@ -1,8 +1,7 @@
 import { HttpService } from '@nestjs/axios';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { response } from 'express';
-import { catchError, lastValueFrom, map, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs';
 
 @Injectable()
 export class RateService {

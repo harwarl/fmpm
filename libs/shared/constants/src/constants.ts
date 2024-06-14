@@ -16,9 +16,17 @@ export enum Actions {
   DECODE_JWT = 'decode_jwt',
   CHANGE_PASSWORD = 'change_password',
 
+  //---------------------------------- INTEGRATION/RATE ----------------------------------
   GET_EXCHANGE_RATES = 'get_exchange_rates',
   GET_EXCHANGE_RATE = 'get_exchange_rate',
   EXCHANGE_AMOUNT = 'exchange_amount',
+
+  //---------------------------------- WALLET ----------------------------------
+  CREATE_WALLET = 'create_wallet',
+  GET_WALLET_BY_ID = 'get_wallet-by_id',
+  GET_ALL_WALLETS = 'get_all_wallet',
+  CREDIT_WALLET = 'credit_wallet',
+  DEBIT_WALLET = 'debit_wallet',
 }
 
 export enum Queues {

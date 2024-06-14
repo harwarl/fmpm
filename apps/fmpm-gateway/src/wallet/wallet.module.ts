@@ -2,22 +2,23 @@ import { Queues, Services } from '@fmpm/constants';
 import { RabbitMQModule } from '@fmpm/modules';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { RateController } from './rate.controller';
+import { WalletController } from './wallet.controller';
 
 @Module({
   imports: [
     RabbitMQModule,
+    RabbitMQModule.registerRmq(Services.WALLET_SERVICE, Queues.WALLET_QUEUE),
+    RabbitMQModule.registerRmq(Services.AUTH_SERVICE, Queues.AUTH_QUEUE),
     RabbitMQModule.registerRmq(
       Services.INTEGRATION_SERVICE,
       Queues.INTEGRATION_QUEUE
     ),
-    RabbitMQModule.registerRmq(Services.AUTH_SERVICE, Queues.AUTH_QUEUE),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: './.env',
     }),
   ],
-  controllers: [RateController],
+  controllers: [WalletController],
   providers: [],
 })
-export class RateModule {}
+export class WalletModule {}

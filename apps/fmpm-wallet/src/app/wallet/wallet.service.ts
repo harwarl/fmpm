@@ -29,6 +29,7 @@ export class WalletService {
   }
 
   async findWalletByUserId(currentUserId: ObjectId): Promise<Wallet[]> {
+    console.log(currentUserId);
     const userWallets = await this.walletRepository.find({
       where: {
         userId: currentUserId,
@@ -47,12 +48,12 @@ export class WalletService {
   }
 
   async creditWallet(creditWalletDto: CreditWalletDto) {
-    const wallet = await this.findWalletByWalletId(creditWalletDto.walletId);
-    if (
-      !wallet ||
-      wallet.userId !== creditWalletDto.senderId ||
-      wallet.currency !== creditWalletDto.currency
-    )
+    // const wallet = await this.findWalletByWalletId(creditWalletDto.walletId);
+    const wallets = await this.findWalletByUserId(creditWalletDto.senderId);
+    const wallet = wallets.find(
+      (wallet) => wallet.currency === creditWalletDto.currency
+    );
+    if (!wallet || wallet.userId !== creditWalletDto.senderId)
       return new HttpException(
         `User does not have a ${creditWalletDto.currency} Wallet`,
         HttpStatus.BAD_REQUEST

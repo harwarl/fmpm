@@ -72,7 +72,19 @@ export class AuthService {
   }
 
   async findById(id: ObjectId): Promise<UserEntity> {
-    return this.userRepository.findOne({ where: { id: id } });
+    return await this.userRepository.findOne({ where: { id: id } });
+  }
+
+  async findByUsername(username: string): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({
+      where: {
+        username: username,
+      },
+    });
+    if (user) {
+      delete user.password;
+    }
+    return user;
   }
 
   async verifyJwt(jwt: string): Promise<{ user: UserEntity; exp: number }> {

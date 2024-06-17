@@ -48,7 +48,16 @@ export class AuthController {
     @Payload() user: { id: ObjectId }
   ): Promise<User> {
     this.rabbitMqService.acknowledgeMessage(context);
-    return this.authService.findById(user.id);
+    return await this.authService.findById(user.id);
+  }
+
+  @MessagePattern({ cmd: Actions.Get_USER_BY_USERNAME })
+  async getUserbyUsername(
+    @Ctx() context: RmqContext,
+    @Payload() payload: { username: string }
+  ) {
+    this.rabbitMqService.acknowledgeMessage(context);
+    return await this.authService.findByUsername(payload.username);
   }
 
   @MessagePattern({ cmd: Actions.VERIFY_JWT })

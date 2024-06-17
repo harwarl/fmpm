@@ -1,7 +1,7 @@
 {
-  "name": "fmpm-transaction",
+  "name": "fmpm-transaction-order",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/fmpm-transaction/src",
+  "sourceRoot": "apps/fmpm-transaction-order/src",
   "projectType": "application",
   "tags": [],
   "targets": {
@@ -9,14 +9,14 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "fmpm-transaction:build"
+        "buildTarget": "fmpm-transaction-order:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "fmpm-transaction:build:development"
+          "buildTarget": "fmpm-transaction-order:build:development"
         },
         "production": {
-          "buildTarget": "fmpm-transaction:build:production"
+          "buildTarget": "fmpm-transaction-order:build:production"
         }
       }
     }

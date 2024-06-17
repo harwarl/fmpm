@@ -1,17 +1,17 @@
 {
-  "name": "fmpm-transaction-e2e",
+  "name": "fmpm-transaction-order-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "implicitDependencies": ["fmpm-transaction"],
+  "implicitDependencies": ["fmpm-transaction-order"],
   "targets": {
     "e2e": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{e2eProjectRoot}"],
       "options": {
-        "jestConfig": "apps/fmpm-transaction-e2e/jest.config.ts",
+        "jestConfig": "apps/fmpm-transaction-order-e2e/jest.config.ts",
         "passWithNoTests": true
       },
-      "dependsOn": ["fmpm-transaction:build"]
+      "dependsOn": ["fmpm-transaction-order:build"]
     }
   }
 }

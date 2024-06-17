@@ -3,12 +3,13 @@
  * This is only a minimal backend to get started.
  */
 
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+
 import { AppModule } from './app/app.module';
 import { ConfigService } from '@nestjs/config';
 import { RabbitMQService } from '@fmpm/modules';
 import { Queues } from '@fmpm/constants';
-import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,16 +19,16 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const rabbitMQService = app.get(RabbitMQService);
 
-  const port = configService.get<string>('INTERGRATION_PORT');
+  const port = configService.get<number>('TRANSACTiON_PORT');
 
   app.connectMicroservice(
-    rabbitMQService.getRmqOptions(Queues.INTEGRATION_QUEUE)
+    rabbitMQService.getRmqOptions(Queues.TRANSACTION_QUEUE)
   );
   await app.startAllMicroservices();
 
   await app.listen(port);
   Logger.log(
-    `🚀 Intergration Service is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 Transaction Service is running on: http://localhost:${port}/${globalPrefix}`
   );
 }
 

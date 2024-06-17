@@ -11,6 +11,7 @@ export enum Actions {
   UPDATE_USER = 'update_user',
   LOGIN_USER = 'login_user',
   GET_USER = 'get_user',
+  Get_USER_BY_USERNAME = 'get_user_by_username',
   VALIDATE_TOKEN = 'validate_token',
   VERIFY_JWT = 'verify_jwt',
   DECODE_JWT = 'decode_jwt',

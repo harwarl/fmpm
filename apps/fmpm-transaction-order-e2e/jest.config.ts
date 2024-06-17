@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'fmpm-transaction-e2e',
+  displayName: 'fmpm-transaction-order-e2e',
   preset: '../../jest.preset.js',
   globalSetup: '<rootDir>/src/support/global-setup.ts',
   globalTeardown: '<rootDir>/src/support/global-teardown.ts',
@@ -15,5 +15,5 @@ export default {
     ],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/fmpm-transaction-e2e',
+  coverageDirectory: '../../coverage/fmpm-transaction-order-e2e',
 };

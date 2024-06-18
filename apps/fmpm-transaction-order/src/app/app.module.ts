@@ -4,7 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TransactionsModule } from './transactions/transactions.module';
 import { OrdersModule } from './orders/orders.module';
-import { RabbitMQModule } from '@fmpm/modules';
+import { MongoModule, RabbitMQModule } from '@fmpm/modules';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({

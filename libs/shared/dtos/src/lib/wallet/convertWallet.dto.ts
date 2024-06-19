@@ -11,5 +11,5 @@ export class ConvertWalletDto {
 
   @IsNotEmpty()
   @IsNumber()
-  amount!: string;
+  amount!: number;
 }

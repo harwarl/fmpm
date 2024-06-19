@@ -13,6 +13,10 @@ import { WalletController } from './wallet.controller';
       Services.INTEGRATION_SERVICE,
       Queues.INTEGRATION_QUEUE
     ),
+    RabbitMQModule.registerRmq(
+      Services.TRANSACTION_ORDER_SERVICE,
+      Queues.TRANSACTION_ORDER_QUEUE
+    ),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: './.env',

@@ -22,7 +22,7 @@ async function bootstrap() {
   const port = configService.get<number>('TRANSACTiON_PORT');
 
   app.connectMicroservice(
-    rabbitMQService.getRmqOptions(Queues.TRANSACTION_QUEUE)
+    rabbitMQService.getRmqOptions(Queues.TRANSACTION_ORDER_QUEUE)
   );
   await app.startAllMicroservices();
 

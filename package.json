@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "serve-all": "nx run-many --target=serve --projects=fmpm-gateway,fmpm-auth,fmpm-integration-rate,fmpm-wallet,fmpm-transaction-order --parallel=4"
+    "serve-all": "nx run-many --target=serve --projects=fmpm-gateway,fmpm-auth,fmpm-integration-rate,fmpm-transaction-order,fmpm-wallet, --parallel=5"
   },
   "private": true,
   "dependencies": {
@@ -25,6 +25,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "express": "^4.19.2",
+    "lodash": "^4.17.21",
     "mongodb": "^6.6.1",
     "nodemailer": "^6.9.13",
     "reflect-metadata": "^0.1.13",

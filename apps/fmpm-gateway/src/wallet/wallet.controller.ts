@@ -6,10 +6,11 @@ import {
   CreateWalletDto,
   CreditWalletDto,
   Currency,
+  SaveTransactionDto,
 } from '@fmpm/dtos';
 import { AuthGuard } from '@fmpm/guards';
 import { UserInteceptor } from '@fmpm/inteceptors';
-import { User } from '@fmpm/models';
+import { OrderStatus, User, Wallet } from '@fmpm/models';
 import {
   Body,
   Controller,
@@ -24,6 +25,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { query } from 'express';
 import { ObjectId } from 'mongodb';
 import { lastValueFrom } from 'rxjs';
 
@@ -35,7 +37,9 @@ export class WalletController {
     @Inject(Services.INTEGRATION_SERVICE)
     private readonly rmq_integration_service: ClientProxy,
     @Inject(Services.AUTH_SERVICE)
-    private readonly rmq_auth_service: ClientProxy
+    private readonly rmq_auth_service: ClientProxy,
+    @Inject(Services.TRANSACTION_ORDER_SERVICE)
+    private readonly rmq_transaction_service: ClientProxy
   ) {}
 
   @Post('')
@@ -61,13 +65,32 @@ export class WalletController {
     @Param() param: { walletId: ObjectId },
     @Body() body: { amount: number; currency: Currency }
   ) {
-    return await lastValueFrom(
+    const fundResponse = await lastValueFrom(
       this.rmq_wallet_service.send({ cmd: Actions.CREDIT_WALLET }, {
         senderId: currentUserId,
         walletId: param.walletId,
         amount: body.amount,
         currency: body.currency,
       } as CreditWalletDto)
+    );
+
+    if (fundResponse.status && fundResponse.name === 'HttpException') {
+      return {
+        error: true,
+        message: `${fundResponse.message}`,
+      };
+    }
+
+    return await lastValueFrom(
+      this.rmq_transaction_service.send({ cmd: Actions.SAVE_TRANSACTION }, {
+        userId: currentUserId.toString(),
+        walletId: param.walletId.toString(),
+        type: 'credit',
+        amount: body.amount,
+        currency: body.currency,
+        metadata: JSON.stringify({ type: 'transfer' }),
+        status: OrderStatus.COMPLETED,
+      } as SaveTransactionDto)
     );
   }
 
@@ -107,6 +130,22 @@ export class WalletController {
       )
     );
 
+    await lastValueFrom(
+      this.rmq_transaction_service.send({ cmd: Actions.SAVE_TRANSACTION }, {
+        userId: currentUserId.toString(),
+        walletId: convertWalletDto.senderId,
+        type: 'debit',
+        amount: convertWalletDto.amount,
+        currency: params.base,
+        metadata: JSON.stringify({
+          type: 'conversion',
+          base: params.base,
+          target: params.target,
+        }),
+        status: OrderStatus.COMPLETED,
+      } as SaveTransactionDto)
+    );
+
     if (debitResponse.status && debitResponse.name === 'HttpException') {
       return {
         error: true,
@@ -135,11 +174,28 @@ export class WalletController {
           amount: convertWalletDto.amount,
         }
       );
+
       return {
         error: true,
         message: `${creditResponse.message}, Transaction Reversed`,
       };
     }
+
+    await lastValueFrom(
+      this.rmq_transaction_service.send({ cmd: Actions.SAVE_TRANSACTION }, {
+        userId: currentUserId.toString(),
+        walletId: convertWalletDto.receiverId,
+        type: 'credit',
+        amount: targetAmount.conversion_result,
+        currency: params.target,
+        metadata: JSON.stringify({
+          type: 'conversion',
+          base: params.base,
+          target: params.target,
+        }),
+        status: OrderStatus.COMPLETED,
+      } as SaveTransactionDto)
+    );
     //TODO: Add transaction Service
     return {
       error: false,
@@ -194,6 +250,20 @@ export class WalletController {
       };
     }
 
+    await lastValueFrom(
+      this.rmq_transaction_service.send({ cmd: Actions.SAVE_TRANSACTION }, {
+        userId: currentUserId.toString(),
+        walletId: debitResponse._id,
+        type: 'debit',
+        amount: body.amount,
+        currency: body.currency,
+        metadata: JSON.stringify({
+          type: 'transfer',
+        }),
+        status: OrderStatus.COMPLETED,
+      } as SaveTransactionDto)
+    );
+
     //Add transaction Details Here
     //Credit the receiver
     const creditResponse = await lastValueFrom(
@@ -217,11 +287,39 @@ export class WalletController {
           amount: body.amount,
         }
       );
+
+      await lastValueFrom(
+        this.rmq_transaction_service.send({ cmd: Actions.SAVE_TRANSACTION }, {
+          userId: currentUserId.toString(),
+          walletId: debitResponse._id,
+          type: 'credit',
+          amount: body.amount,
+          currency: body.currency,
+          metadata: JSON.stringify({
+            type: 'transfer',
+          }),
+          status: OrderStatus.COMPLETED,
+        } as SaveTransactionDto)
+      );
       return {
         error: true,
         message: `${creditResponse.message} , Transaction Reversed`,
       };
     }
+
+    await lastValueFrom(
+      this.rmq_transaction_service.send({ cmd: Actions.SAVE_TRANSACTION }, {
+        userId: receiverDetails._id.toString(),
+        walletId: creditResponse._id,
+        type: 'credit/Reversal',
+        amount: body.amount,
+        currency: body.currency,
+        metadata: JSON.stringify({
+          type: 'transfer',
+        }),
+        status: OrderStatus.COMPLETED,
+      } as SaveTransactionDto)
+    );
 
     return {
       error: false,

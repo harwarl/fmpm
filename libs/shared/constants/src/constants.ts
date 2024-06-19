@@ -1,8 +1,7 @@
 export enum Services {
   AUTH_SERVICE = 'AUTH_SERVICE',
   WALLET_SERVICE = 'WALLET_SERVICE',
-  ORDERS_SERVICE = 'ORDERS_SERVICE',
-  TRANSACTION_SERVICE = 'TRANSACTION_SERVICE',
+  TRANSACTION_ORDER_SERVICE = 'TRANSACTION_ORDER_SERVICE',
   INTEGRATION_SERVICE = 'INTEGRATIONM_SERVICE',
 }
 
@@ -28,12 +27,18 @@ export enum Actions {
   GET_ALL_WALLETS = 'get_all_wallet',
   CREDIT_WALLET = 'credit_wallet',
   DEBIT_WALLET = 'debit_wallet',
+
+  //---------------------------------- TRANSACTION/ORDER ----------------------------------
+  SAVE_TRANSACTION = 'save_transaction',
+  GET_ALL_TRANSACTION = 'get_all_transactions',
+  CREATE_ORDER = 'create_order',
+  UPDATE_ORDER = 'update_order',
+  DELETE_ORDER = 'delete_order',
 }
 
 export enum Queues {
   AUTH_QUEUE = 'auth_queue',
   WALLET_QUEUE = 'wallet_queue',
-  TRANSACTION_QUEUE = 'transaction_queue',
-  ORDER_QUEUE = 'order_queue',
+  TRANSACTION_ORDER_QUEUE = 'transaction_order_queue',
   INTEGRATION_QUEUE = 'integration_queue',
 }

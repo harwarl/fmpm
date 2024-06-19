@@ -1,4 +1,10 @@
-import { User, Wallet } from '@fmpm/models';
+import {
+  Order,
+  OrderTransactions,
+  Transactions,
+  User,
+  Wallet,
+} from '@fmpm/models';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -13,7 +19,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       useFactory: (configService: ConfigService) => ({
         type: 'mongodb',
         url: configService.get('MONGO_URL'),
-        entities: [User, Wallet],
+        entities: [User, Wallet, Transactions, Order, OrderTransactions],
         useUnifiedTopology: true,
         useNewUrlParser: true,
         synchronize: false,

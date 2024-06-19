@@ -29,7 +29,6 @@ export class WalletService {
   }
 
   async findWalletByUserId(currentUserId: ObjectId): Promise<Wallet[]> {
-    console.log(currentUserId);
     const userWallets = await this.walletRepository.find({
       where: {
         userId: currentUserId,
@@ -59,6 +58,8 @@ export class WalletService {
         HttpStatus.BAD_REQUEST
       );
 
+    if (typeof creditWalletDto.amount !== 'number')
+      return new HttpException('Amount is not a value', HttpStatus.BAD_REQUEST);
     if (wallet.balance) {
       wallet.balance += creditWalletDto.amount;
     } else {

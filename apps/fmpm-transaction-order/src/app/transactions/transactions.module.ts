@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { TransactionsController } from './transactions.controller';
-import { RabbitMQModule } from '@fmpm/modules';
+import { MongoModule, RabbitMQModule } from '@fmpm/modules';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Transaction } from 'typeorm';
+import { Transactions } from '@fmpm/models';
 
 @Module({
-  imports: [RabbitMQModule, TypeOrmModule.forFeature([Transaction])],
+  imports: [
+    TypeOrmModule.forFeature([Transactions]),
+    RabbitMQModule,
+    MongoModule,
+  ],
   controllers: [TransactionsController],
   providers: [TransactionsService],
 })

@@ -1,5 +1,11 @@
-import { CreateOrderDto, DeleteOrderDto, UpdateOrderDto } from '@fmpm/dtos';
-import { Order } from '@fmpm/models';
+import {
+  CreateOrderDto,
+  DeleteOrderDto,
+  GetTransactionsFilterDto,
+  UpdateOrderDto,
+  UpdateOrderPayloadDto,
+} from '@fmpm/dtos';
+import { Order, OrderStatus } from '@fmpm/models';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ObjectId } from 'mongodb';
@@ -15,11 +21,11 @@ export class OrdersService {
 
   async createOrder(createOrderDto: CreateOrderDto): Promise<Order> {
     const newOrder = new Order();
-    Object.assign(newOrder, createOrderDto);
+    Object.assign(newOrder, { status: OrderStatus.PENDING, ...createOrderDto });
     return await this.orderRepository.save(newOrder);
   }
 
-  async updateOrder(updateOrderDto: UpdateOrderDto) {
+  async updateOrder(updateOrderDto: UpdateOrderPayloadDto) {
     const order = await this.getOrderById(updateOrderDto.orderId);
 
     if (!order)
@@ -35,9 +41,24 @@ export class OrdersService {
     if (!order)
       return new HttpException('Order does not exist', HttpStatus.BAD_REQUEST);
 
-    return await this.orderRepository.delete(
-      new ObjectId(deleteOrderDto.orderId)
-    );
+    Object.assign(order, { status: OrderStatus.CANCELLED });
+    return await this.orderRepository.save(order);
+  }
+
+  async getAllOrders(
+    getOrderFilter: GetTransactionsFilterDto
+  ): Promise<Order[]> {
+    const limit = getOrderFilter.limit ? getOrderFilter.limit : 10;
+    const page = getOrderFilter.page ? getOrderFilter.page : 1;
+
+    return await this.orderRepository.find({
+      where: {
+        userId: getOrderFilter.userId,
+      },
+      order: {
+        created_at: 'DESC',
+      },
+    });
   }
 
   async getOrderById(orderId: string): Promise<Order> {

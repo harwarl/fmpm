@@ -6,7 +6,14 @@ import {
   Payload,
   RmqContext,
 } from '@nestjs/microservices';
-import { CreateOrderDto, DeleteOrderDto, UpdateOrderDto } from '@fmpm/dtos';
+import {
+  CreateOrderDto,
+  CreateOrderPayloadDto,
+  DeleteOrderDto,
+  GetTransactionsFilterDto,
+  UpdateOrderDto,
+  UpdateOrderPayloadDto,
+} from '@fmpm/dtos';
 import { RabbitMQService } from '@fmpm/modules';
 import { Actions } from '@fmpm/constants';
 
@@ -20,7 +27,7 @@ export class OrdersController {
   @MessagePattern({ cmd: Actions.CREATE_ORDER })
   async createOrder(
     @Ctx() context: RmqContext,
-    @Payload() createOrderDto: CreateOrderDto
+    @Payload() createOrderDto: CreateOrderPayloadDto
   ) {
     this.rabbitMqService.acknowledgeMessage(context);
     return await this.ordersService.createOrder(createOrderDto);
@@ -29,7 +36,7 @@ export class OrdersController {
   @MessagePattern({ cmd: Actions.UPDATE_ORDER })
   async updateOrder(
     @Ctx() context: RmqContext,
-    @Payload() updateOrderDto: UpdateOrderDto
+    @Payload() updateOrderDto: UpdateOrderPayloadDto
   ) {
     this.rabbitMqService.acknowledgeMessage(context);
     return await this.ordersService.updateOrder(updateOrderDto);
@@ -42,5 +49,14 @@ export class OrdersController {
   ) {
     this.rabbitMqService.acknowledgeMessage(context);
     return await this.ordersService.deleteOrder(deleteOrderDto);
+  }
+
+  @MessagePattern({ cmd: Actions.GET_ALL_ORDERS })
+  async getAllOrders(
+    @Ctx() context: RmqContext,
+    @Payload() getOrderFilter: GetTransactionsFilterDto
+  ) {
+    this.rabbitMqService.acknowledgeMessage(context);
+    return await this.ordersService.getAllOrders(getOrderFilter);
   }
 }

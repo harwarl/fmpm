@@ -31,9 +31,12 @@ export enum Actions {
   //---------------------------------- TRANSACTION/ORDER ----------------------------------
   SAVE_TRANSACTION = 'save_transaction',
   GET_ALL_TRANSACTION = 'get_all_transactions',
+  GET_ALL_ORDERS = 'get_all_orders',
   CREATE_ORDER = 'create_order',
   UPDATE_ORDER = 'update_order',
   DELETE_ORDER = 'delete_order',
+  SAVE_ORDER_TRANSACTION = 'save_order_transaction',
+  GET_ORDER_TRANSACTIONS = 'get_order_transactions',
 }
 
 export enum Queues {

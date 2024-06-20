@@ -23,7 +23,9 @@ export class ProfileService {
   }
 
   async getUser(currentUserId: ObjectId): Promise<User> {
-    return await this.findUserById(currentUserId);
+    const user = await this.findUserById(currentUserId);
+    delete user.password;
+    return user;
   }
 
   async updateUser(

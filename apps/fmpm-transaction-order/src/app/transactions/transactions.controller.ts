@@ -6,7 +6,11 @@ import {
   Payload,
   RmqContext,
 } from '@nestjs/microservices';
-import { GetTransactionsFilterDto, SaveTransactionDto } from '@fmpm/dtos';
+import {
+  GetTransactionsFilterDto,
+  SaveTransactionDto,
+  SaveOrderTransactionDto,
+} from '@fmpm/dtos';
 import { RabbitMQService } from '@fmpm/modules';
 import { Actions } from '@fmpm/constants';
 
@@ -24,6 +28,17 @@ export class TransactionsController {
   ) {
     this.rabbitMqService.acknowledgeMessage(context);
     return await this.transactionsService.saveTransaction(saveTransactionDto);
+  }
+
+  @MessagePattern({ cmd: Actions.SAVE_ORDER_TRANSACTION })
+  async saveOrderTransaction(
+    @Ctx() context: RmqContext,
+    @Payload() saveTransactionDto: SaveOrderTransactionDto
+  ) {
+    this.rabbitMqService.acknowledgeMessage(context);
+    return await this.transactionsService.saveOrderTransaction(
+      saveTransactionDto
+    );
   }
 
   @MessagePattern({

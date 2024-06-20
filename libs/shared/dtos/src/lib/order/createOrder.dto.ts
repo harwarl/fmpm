@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class CreateOrderDto {
+export class CreateOrderPayloadDto {
   @IsNotEmpty()
   @IsString()
   userId!: string;
@@ -28,4 +28,25 @@ export class CreateOrderDto {
   @IsNotEmpty()
   @IsNumber()
   status!: string;
+}
+export class CreateOrderDto {
+  @IsNotEmpty()
+  @IsString()
+  order_type!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  base_currency!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  quote_currency!: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  amount!: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  rate!: number;
 }

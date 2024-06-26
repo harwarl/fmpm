@@ -49,7 +49,8 @@
         "apps/fmpm-wallet-e2e/**/*",
         "apps/fmpm-transaction-e2e/**/*",
         "apps/fmpm-integration-rate-e2e/**/*",
-        "apps/fmpm-transaction-order-e2e/**/*"
+        "apps/fmpm-transaction-order-e2e/**/*",
+        "apps/fmpm-grpc-rate-e2e/**/*"
       ]
     }
   ],

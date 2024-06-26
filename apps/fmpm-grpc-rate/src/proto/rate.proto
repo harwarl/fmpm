@@ -1,0 +1,68 @@
+syntax = 'proto3';
+
+package rate;
+//Exchange Rate Request Message Containing the base Currency and the target Currency
+message ExchangeRate {
+    string base = 1;
+    string target = 2;
+}
+
+//Exchange Ammount of a particular amount in the base currency to the target currency
+message ExchangeAmount {
+    //base currency
+    string base = 1;
+    //target currency to which the amount is to be converted to
+    string target = 2;
+    //the amount to be converted in the base curency
+    double amount = 3;
+}
+
+//the conversion rate of all currencies with respect to the base currency
+message ExchangeRates {
+    string baseRate = 1;
+}
+
+
+message ExchangeRatesResponse {
+    string result = 1;
+    string documentation = 2;
+    string terms_of_use = 3;
+    int64 time_last_update_unix = 4;
+    string time_last_update_utc = 5;
+    int64 time_next_update_unix = 6;
+    string time_next_update_utc = 7;
+    string base_code = 8;
+    map<string, double> conversion_rates = 9;
+}
+
+message ExchangeRateResponse {
+    string result = 1;
+    string documentation = 2;
+    string terms_of_use = 3;
+    int64 time_last_update_unix = 4;
+    string time_last_update_utc = 5;
+    int64 time_next_update_unix = 6;
+    string time_next_update_utc = 7;
+    string base_code = 8;
+    double conversion_rates = 9;
+}
+
+message ExchangeAmountResponse {
+    string result = 1;
+    string documentation = 2;
+    string terms_of_use = 3;
+    int64 time_last_update_unix = 4;
+    string time_last_update_utc = 5;
+    int64 time_next_update_unix = 6;
+    string time_next_update_utc = 7;
+    string base_code = 8;
+    double conversion_rates = 9;
+    double conversion_result = 10;
+}
+
+
+service RateService {
+    rpc GetExchangeRates (ExchangeRates) returns (stream ExchangeRatesResponse) {}
+    rpc GetExchangeRate (ExchangeRate) returns (stream ExchangeRateResponse) {}
+    rpc GetExchangeAmount (ExchangeAmount) returns (stream ExchangeAmountResponse) {}
+}

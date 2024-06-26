@@ -19,7 +19,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const rabbitMQService = app.get(RabbitMQService);
 
-  const port = configService.get<number>('TRANSACTiON_PORT');
+  const port = configService.get<number>('TRANSACTION_PORT');
 
   app.connectMicroservice(
     rabbitMQService.getRmqOptions(Queues.TRANSACTION_ORDER_QUEUE)

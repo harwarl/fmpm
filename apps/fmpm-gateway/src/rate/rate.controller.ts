@@ -28,11 +28,11 @@ export class RateController {
   ) {}
 
   @Get('')
-  async getExchangeRates(@Query() query: Query) {
+  async getExchangeRates(@Query('baseRate') baseRate: string) {
     return await lastValueFrom(
       this.rmq_rate_client.send(
         { cmd: Actions.GET_EXCHANGE_RATES },
-        { baseRate: query.baseRate }
+        { baseRate: baseRate }
       )
     );
   }

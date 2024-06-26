@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package rate;
+
+// Message to request exchange rates between base and target currencies.
+message ExchangeRate {
+    string base = 1;    // Base currency code (e.g., USD)
+    string target = 2;  // Target currency code (e.g., EUR)
+}
+
+// Message to request conversion of an amount from base to target currency.
+message ExchangeAmount {
+    string base = 1;    // Base currency code (e.g., USD)
+    string target = 2;  // Target currency code (e.g., EUR)
+    double amount = 3;  // Amount in base currency to convert
+}
+
+// Message to specify the base exchange rate.
+message ExchangeRates {
+    string baseRate = 1;  // Base currency code (e.g., USD)
+}
+
+// Response containing exchange rates for multiple currencies.
+message ExchangeRatesResponse {
+    string result = 1;                  // Result of the operation
+    string documentation = 2;           // Documentation URL
+    string terms_of_use = 3;            // Terms of use
+    int64 time_last_update_unix = 4;    // Last update time in Unix timestamp
+    string time_last_update_utc = 5;    // Last update time in UTC
+    int64 time_next_update_unix = 6;    // Next update time in Unix timestamp
+    string time_next_update_utc = 7;    // Next update time in UTC
+    string base_code = 8;               // Base currency code (e.g., USD)
+    map<string, double> conversion_rates = 9;  // Conversion rates map (target currency -> rate)
+}
+
+// Response containing exchange rate for a single target currency.
+message ExchangeRateResponse {
+    string result = 1;                  // Result of the operation
+    string documentation = 2;           // Documentation URL
+    string terms_of_use = 3;            // Terms of use
+    int64 time_last_update_unix = 4;    // Last update time in Unix timestamp
+    string time_last_update_utc = 5;    // Last update time in UTC
+    int64 time_next_update_unix = 6;    // Next update time in Unix timestamp
+    string time_next_update_utc = 7;    // Next update time in UTC
+    string base_code = 8;               // Base currency code (e.g., USD)
+    double conversion_rate = 9;         // Conversion rate for the target currency
+}
+
+// Response containing converted amount and exchange rate details.
+message ExchangeAmountResponse {
+    string result = 1;                  // Result of the operation
+    string documentation = 2;           // Documentation URL
+    string terms_of_use = 3;            // Terms of use
+    int64 time_last_update_unix = 4;    // Last update time in Unix timestamp
+    string time_last_update_utc = 5;    // Last update time in UTC
+    int64 time_next_update_unix = 6;    // Next update time in Unix timestamp
+    string time_next_update_utc = 7;    // Next update time in UTC
+    string base_code = 8;               // Base currency code (e.g., USD)
+    double conversion_rate = 9;         // Conversion rate used
+    double conversion_result = 10;      // Converted amount in target currency
+}
+
+// gRPC service definition for handling rate-related operations.
+service RateService {
+    rpc GetExchangeRates (ExchangeRates) returns (stream ExchangeRatesResponse) {}
+    rpc GetExchangeRate (ExchangeRate) returns (stream ExchangeRateResponse) {}
+    rpc GetExchangeAmount (ExchangeAmount) returns (stream ExchangeAmountResponse) {}
+}

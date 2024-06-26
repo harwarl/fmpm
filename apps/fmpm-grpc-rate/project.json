@@ -1,7 +1,7 @@
 {
-  "name": "fmpm-gateway",
+  "name": "fmpm-grpc-rate",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/fmpm-gateway/src",
+  "sourceRoot": "apps/fmpm-grpc-rate/src",
   "projectType": "application",
   "tags": [],
   "targets": {
@@ -9,37 +9,37 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "fmpm-gateway:build"
+        "buildTarget": "fmpm-grpc-rate:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "fmpm-gateway:build:development"
+          "buildTarget": "fmpm-grpc-rate:build:development"
         },
         "production": {
-          "buildTarget": "fmpm-gateway:build:production"
+          "buildTarget": "fmpm-grpc-rate:build:production"
         }
       }
     },
     "build": {
       "executor": "@nx/js:tsc",
       "options": {
-        "outputPath": "dist/apps/fmpm-gateway",
-        "main": "apps/fmpm-gateway/src/main.ts",
-        "tsConfig": "apps/fmpm-gateway/tsconfig.app.json",
+        "outputPath": "dist/apps/fmpm-grpc-rate",
+        "main": "apps/fmpm-grpc-rate/src/main.ts",
+        "tsConfig": "apps/fmpm-grpc-rate/tsconfig.app.json",
         "assets": [
           "path-to-my-project/*.md",
           {
-            "input": "apps/fmpm-gateway/src",
+            "input": "apps/fmpm-grpc-rate/src",
             "glob": "**/!(*.ts)",
             "output": "."
           },
           {
-            "input": "apps/fmpm-gateway",
+            "input": "apps/fmpm-grpc-rate",
             "glob": "executors.json",
             "output": "."
           },
           {
-            "input": "apps/fmpm-gateway/src/proto",
+            "input": "apps/fmpm-grpc-rate/src/proto",
             "glob": "**/*.proto",
             "output": "./src/proto"
           }
@@ -52,8 +52,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps/fmpm-gateway/src/environments/environment.ts",
-              "with": "apps/fmpm-gateway/src/environments/environment.prod.ts"
+              "replace": "apps/fmpm-grpc-rate/src/environments/environment.ts",
+              "with": "apps/fmpm-grpc-rate/src/environments/environment.prod.ts"
             }
           ]
         }

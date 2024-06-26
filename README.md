@@ -60,4 +60,145 @@ It will show tasks that you can run with Nx.
 - [Join the community](https://nx.dev/community)
 - [Subscribe to the Nx Youtube Channel](https://www.youtube.com/@nxdevtools)
 - [Follow us on Twitter](https://twitter.com/nxdevtools)
+
 # fmpm
+
+# FMPM Microservices
+
+This repository contains a set of microservices built using the NX workspace. The project consists of the following services:
+
+- `fmpm-integration-rate`: Handles rate integration.
+- `fmpm-auth`: Manages authentication.
+- `fmpm-transaction-order`: Manages transaction orders.
+- `fmpm-wallet`: Manages wallet operations.
+- `fmpm-gateway`: The gateway service that routes requests to the appropriate microservice.
+
+## Table of Contents
+
+- [Architecture](#architecture)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Running the Services](#running-the-services)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Architecture
+
+This project follows a microservice architecture using NX workspace to manage multiple services efficiently.
+
+- **NX Workspace**: A powerful build framework for managing multiple projects in a single repository.
+- **Microservices**: Each service is independent and can be deployed, scaled, and developed independently.
+
+### Services
+
+1. **fmpm-integration-rate**:
+
+   - Provides currency rate integration services.
+   - gRPC-based service for high performance.
+
+2. **fmpm-auth\*\***:
+
+   - Handles user authentication and authorization.
+   - Uses JWT for secure authentication.
+
+3. **fmpm-transaction-order**:
+
+   - Manages and processes transaction orders.
+   - Ensures data integrity and handles business logic for transactions.
+
+4. **fmpm-wallet**:
+
+   - Manages user wallets, including balance inquiries and transactions.
+   - Ensures secure and efficient wallet operations.
+
+5. **fmpm-gateway**:
+   - Acts as the API gateway, routing requests to the appropriate microservices.
+   - Ensures a single entry point for all client requests.
+
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+- Node.js and npm installed
+- Docker installed (optional, for containerized deployment)
+- NX CLI installed globally
+
+```sh
+npm install -g nx
+```
+
+## Installation
+
+Clone the repository and install dependencies:
+
+```sh
+git clone https://github.com/your-repo/fmpm-microservices.git
+cd fmpm-microservices
+npm install
+```
+
+Running the Services
+Each service can be run individually or all together using NX commands.
+
+Running Individual Services
+Navigate to the service directory and start the service:
+
+```sh
+Copy code
+nx serve fmpm-integration-rate
+nx serve fmpm-auth
+nx serve fmpm-transaction-order
+nx serve fmpm-wallet
+nx serve fmpm-gateway
+```
+
+## Running All Services
+
+To run all services simultaneously, you can use the NX run-many command:
+
+```sh
+nx run-many --target=serve --all
+```
+
+## Usage
+
+API Endpoints
+fmpm-integration-rate
+GET /rate: Fetch current rates.
+fmpm-auth
+POST /auth/login: User login.
+POST /auth/register: User registration.
+fmpm-transaction-order
+POST /transaction/create: Create a new transaction.
+GET /transaction/:id: Get transaction details.
+fmpm-wallet
+GET /wallet/balance: Get wallet balance.
+POST /wallet/transfer: Transfer funds.
+fmpm-gateway
+Acts as a proxy to the other services.
+
+## Environment Variables
+
+Each service uses environment variables for configuration. Refer to the .env.example file in each service directory and create a .env file with the required values.
+
+## Contributing
+
+Contributions are always welcome! Please read the contributing guidelines first.
+
+## Fork the repository.
+
+Create a new feature branch.
+Commit your changes.
+Push to the branch.
+Create a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+### Additional Notes
+
+- Replace ` https://github.com/harwarl/fmpm.git` with the actual URL of your repository.
+- Add more specific details for API endpoints and usage as needed.
+- Include information about setting up the development environment, running tests, and any other important instructions relevant to your project.

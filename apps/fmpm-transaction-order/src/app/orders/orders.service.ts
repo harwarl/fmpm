@@ -45,7 +45,7 @@ export class OrdersService {
     return await this.orderRepository.save(order);
   }
 
-  async getAllOrders(
+  async getAllUserOrders(
     getOrderFilter: GetTransactionsFilterDto
   ): Promise<Order[]> {
     const limit = getOrderFilter.limit ? getOrderFilter.limit : 10;
@@ -54,6 +54,17 @@ export class OrdersService {
     return await this.orderRepository.find({
       where: {
         userId: getOrderFilter.userId,
+      },
+      order: {
+        created_at: 'DESC',
+      },
+    });
+  }
+
+  async getAllOrders(): Promise<Order[]> {
+    return await this.orderRepository.find({
+      where: {
+        status: OrderStatus.PENDING,
       },
       order: {
         created_at: 'DESC',

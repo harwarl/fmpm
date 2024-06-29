@@ -14,7 +14,7 @@ export type ConversionRate = {
 };
 
 export class IResExchangeRates extends IBaseExchangeResponse {
-  conversion_rates: ConversionRate[];
+  conversionRates: ConversionRate[];
 }
 
 export class IResExchangeRate extends IBaseExchangeResponse {

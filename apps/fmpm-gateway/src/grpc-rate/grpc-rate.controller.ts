@@ -30,7 +30,7 @@ export type Query = {
   target?: string;
 };
 
-interface RateService {
+export interface RateService {
   getExchangeRates(data: IExchangeRates): Observable<IResExchangeRates>;
   getExchangeRate(data: IExchangeRate): Observable<IResExchangeRate>;
   getExchangeAmount(data: IExchangeAmount): Observable<IResExchangeAmount>;

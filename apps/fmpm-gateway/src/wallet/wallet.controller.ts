@@ -196,7 +196,7 @@ export class WalletController {
         status: OrderStatus.COMPLETED,
       } as SaveTransactionDto)
     );
-    //TODO: Add transaction Service
+
     return {
       error: false,
       message: 'Conversion Successful',

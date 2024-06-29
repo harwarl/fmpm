@@ -33,6 +33,7 @@ export enum Actions {
   SAVE_TRANSACTION = 'save_transaction',
   GET_ALL_TRANSACTION = 'get_all_transactions',
   GET_ALL_ORDERS = 'get_all_orders',
+  GET_ALL_USER_ORDERS = 'get_all_user_orders',
   CREATE_ORDER = 'create_order',
   UPDATE_ORDER = 'update_order',
   DELETE_ORDER = 'delete_order',

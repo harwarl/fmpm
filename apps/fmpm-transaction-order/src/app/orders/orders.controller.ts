@@ -52,11 +52,17 @@ export class OrdersController {
   }
 
   @MessagePattern({ cmd: Actions.GET_ALL_ORDERS })
-  async getAllOrders(
+  async getAllOrders(@Ctx() context: RmqContext) {
+    this.rabbitMqService.acknowledgeMessage(context);
+    return await this.ordersService.getAllOrders();
+  }
+
+  @MessagePattern({ cmd: Actions.GET_ALL_USER_ORDERS })
+  async getAllUserOrders(
     @Ctx() context: RmqContext,
     @Payload() getOrderFilter: GetTransactionsFilterDto
   ) {
     this.rabbitMqService.acknowledgeMessage(context);
-    return await this.ordersService.getAllOrders(getOrderFilter);
+    return await this.ordersService.getAllUserOrders(getOrderFilter);
   }
 }

@@ -31,7 +31,7 @@ export class Order {
   order_type!: string;
 
   @Column({ type: 'string', default: '', enum: Currency })
-  base_currency!: Currency;
+  base_currency!: 'USD';
 
   @Column({ type: 'string', default: '', enum: Currency })
   quote_currency!: Currency;

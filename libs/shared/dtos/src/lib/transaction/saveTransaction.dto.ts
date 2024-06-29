@@ -53,11 +53,15 @@ export class SaveOrderTransactionDto {
 
   @IsNotEmpty()
   @IsNumber()
-  readonly status!: number; 
+  readonly status!: number;
 
   @IsNotEmpty()
   @IsString()
   readonly rate!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly message!: string;
 }
 
 export class GetTransactionsFilterDto {

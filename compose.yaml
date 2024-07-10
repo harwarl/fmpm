@@ -1,0 +1,167 @@
+version: '3.6'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    volumes:
+      - /var/lib/rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    env_file:
+      - .env
+
+  mongo:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: fmpm_dd
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./db-data/mongo/:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+
+  # fmpm-auth
+  fmpm-auth:
+    build:
+      context: .
+      target: development
+      dockerfile: ./apps/fmpm-auth/Dockerfile
+    command: yarn serve:fmpm-auth
+    expose:
+      - 3003
+    ports:
+      - '3003:3003'
+    depends_on:
+      - mongo
+      - rabbitmq
+    environment:
+      - MONGO_URL=mongodb://localhost:27017/fmpm_dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  # fmpm-gateway:
+  fmpm-gateway:
+    build:
+      context: .
+      target: development
+      dockerfile: ./apps/fmpm-gateway/Dockerfile
+    command: yarn serve:fmpm-gateway
+    expose:
+      - 3004
+    ports:
+      - '3004:3004'
+    depends_on:
+      - mongo
+      - rabbitmq
+      - fmpm-auth
+      - fmpm-transaction-order
+      - fmpm-wallet
+      - fmpm-grpc-rate
+      - fmpm-integration-rate
+    environment:
+      - MONGO_URL=mongodb://localhost:27017/fmpm_dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  fmpm-grpc-rate:
+    build:
+      context: .
+      target: development
+      dockerfile: ./apps/fmpm-auth/Dockerfile
+    command: yarn serve:fmpm-grpc-rate
+    expose:
+      - 3008
+    ports:
+      - '3008:3008'
+    depends_on:
+      - mongo
+      - rabbitmq
+      - fmpm-auth
+    environment:
+      - MONGO_URL=mongodb://localhost:27017/fmpm_dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  fmpm-integration-rate:
+    build:
+      context: .
+      target: development
+      dockerfile: ./apps/fmpm-integration-rate/Dockerfile
+    command: yarn serve:fmpm-integration-rate
+    expose:
+      - 3005
+    ports:
+      - '3005:3005'
+    depends_on:
+      - mongo
+      - rabbitmq
+      - fmpm-auth
+    environment:
+      - MONGO_URL=mongodb://localhost:27017/fmpm_dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  fmpm-transaction-order:
+    build:
+      context: .
+      target: development
+      dockerfile: ./apps/fmpm-transaction-order/Dockerfile
+    command: yarn serve:fmpm-transaction-order
+    expose:
+      - 3007
+    ports:
+      - '3007:3007'
+    depends_on:
+      - mongo
+      - rabbitmq
+      - fmpm-auth
+    environment:
+      - MONGO_URL=mongodb://localhost:27017/fmpm_dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  fmpm-wallet:
+    build:
+      context: .
+      target: development
+      dockerfile: ./apps/fmpm-wallet/Dockerfile
+    command: yarn serve:fmpm-wallet
+    expose:
+      - 3006
+    ports:
+      - '3006:3006'
+    depends_on:
+      - mongo
+      - rabbitmq
+      - fmpm-auth
+    environment:
+      - MONGO_URL=mongodb://localhost:27017/fmpm_dev
+    volumes:
+      - .:/app
+      - /app/node_modules

@@ -1,4 +1,5 @@
 import { CreateWalletDto, CreditWalletDto, DebitWalletDto } from '@fmpm/dtos';
+import { IWalletResponse } from '@fmpm/interfaces';
 import { Wallet } from '@fmpm/models';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -25,9 +26,11 @@ export class WalletService {
 
     const newWallet = new Wallet();
     Object.assign(newWallet, createWalletDto);
-    return await this.walletRepository.save(newWallet);
+    const savedWallet = await this.walletRepository.save(newWallet);
+    return savedWallet;
   }
 
+  //Finds user wallets by userId
   async findWalletByUserId(currentUserId: ObjectId): Promise<Wallet[]> {
     const userWallets = await this.walletRepository.find({
       where: {
@@ -37,6 +40,7 @@ export class WalletService {
     return userWallets;
   }
 
+  //Finds the wallet by Id
   async findWalletByWalletId(walletId: ObjectId) {
     const userWallet = await this.walletRepository.findOne({
       where: {
@@ -65,8 +69,7 @@ export class WalletService {
     } else {
       wallet.balance = creditWalletDto.amount;
     }
-    await this.walletRepository.save(wallet);
-    return wallet;
+    return await this.walletRepository.save(wallet);
   }
 
   async debitWallet(debitWalletDto: DebitWalletDto) {
@@ -100,5 +103,17 @@ export class WalletService {
     if (!wallet)
       return new HttpException('Wallet does not exist', HttpStatus.BAD_REQUEST);
     return wallet;
+  }
+
+  buildWalletResponse(
+    error: boolean,
+    data: { wallet: Wallet | Wallet[] | null },
+    message: string
+  ): IWalletResponse {
+    return {
+      error,
+      message,
+      data,
+    };
   }
 }

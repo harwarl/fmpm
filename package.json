@@ -3,7 +3,19 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "serve-all": "nx run-many --target=serve --projects=fmpm-gateway,fmpm-auth,fmpm-integration-rate,fmpm-transaction-order,fmpm-wallet,fmpm-grpc-rate --parallel=6"
+    "serve-all": "nx run-many --target=serve --projects=fmpm-gateway,fmpm-auth,fmpm-integration-rate,fmpm-transaction-order,fmpm-wallet,fmpm-grpc-rate --parallel=6",
+    "build:fmpm-gateway": "nx build fmpm-gateway",
+    "build:fmpm-auth": "nx build fmpm-auth",
+    "build:fmpm-grpc-rate": "nx build fmpm-grpc-rate",
+    "build:fmpm-integration-rate": "nx build fmpm-integration-rate",
+    "build:fmpm-transaction-order": "nx build fmpm-transaction-order",
+    "build:fmpm-wallet": "nx build fmpm-wallet",
+    "serve:fmpm-gateway": "nx serve fmpm-gateway",
+    "serve:fmpm-auth": "nx serve fmpm-auth",
+    "serve:fmpm-grpc-rate": "nx serve fmpm-grpc-rate",
+    "serve:fmpm-integration-rate": "nx serve fmpm-integration-rate",
+    "serve:fmpm-transaction-order": "nx serve fmpm-transaction-order",
+    "serve:fmpm-wallet": "nx serve fmpm-wallet"
   },
   "private": true,
   "dependencies": {

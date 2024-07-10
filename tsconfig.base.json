@@ -21,6 +21,7 @@
       "@fmpm/guards": ["libs/shared/guards/src/index.ts"],
       "@fmpm/helpers": ["libs/shared/helpers/src/index.ts"],
       "@fmpm/inteceptors": ["libs/shared/inteceptors/src/index.ts"],
+      "@fmpm/interfaces": ["libs/shared/interfaces/src/index.ts"],
       "@fmpm/models": ["libs/shared/models/src/index.ts"],
       "@fmpm/modules": ["libs/shared/modules/src/index.ts"]
     }

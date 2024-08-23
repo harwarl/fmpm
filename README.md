@@ -196,9 +196,3 @@ Create a pull request.
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
-
-### Additional Notes
-
-- Replace ` https://github.com/harwarl/fmpm.git` with the actual URL of your repository.
-- Add more specific details for API endpoints and usage as needed.
-- Include information about setting up the development environment, running tests, and any other important instructions relevant to your project.
